@@ -1,20 +1,20 @@
-#define M1PWM 9
-#define M1A 12
-#define M2PWM 10
-#define M2A 11
-#define LED1 2
-#define LED2 7
-#define M1E 8
-#define M2E 13
+#define M1PWM P3_0
+#define M1A P2_0
+#define M2PWM P2_2
+#define M2A P3_3
+#define LED1 P3_2
+#define LED2 P3_4
+#define M1E P3_1
+#define M2E P3_1
 
-#include "Timer.h"
+//#include "Timer.h" Sin Balizas
 
 char Buffer[2] = {0, 0}; // Buffer[0] : Adelante, Buffer[1] : Giro.
 byte baseSpeed = 175;
 int timerID = 0;
 byte balFlag = 0;
 byte lightsOn = 0;
-Timer t;
+// Timer t;
 
 void setup()
 {
@@ -22,7 +22,7 @@ void setup()
   pinMode(LED2, OUTPUT);
   digitalWrite(LED1, 0);
   digitalWrite(LED2, 0);
-  timerID = t.every(1000, blinkLights);
+  //timerID = t.every(1000, blinkLights);
 
   delay(500);
 
@@ -33,11 +33,10 @@ void setup()
 
 void loop()
 {
-  t.update();
+  // t.update();
   if ( Serial.available() > 0 )
   {
     Serial.readBytes(&Buffer[0], 1);
-    //Serial.flush();
 
     switch (Buffer[0])
     {
@@ -100,69 +99,69 @@ void loop()
 
       case '0':
         baseSpeed = 100;
-        t.stop(timerID);
-        timerID = t.every(1000, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(1000, blinkLights);
         break;
 
       case '1':
         baseSpeed = 110;
-        t.stop(timerID);
-        timerID = t.every(900, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(900, blinkLights);
         break;
 
       case '2':
         baseSpeed = 120;
-        t.stop(timerID);
-        timerID = t.every(800, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(800, blinkLights);
         break;
 
       case '3':
         baseSpeed = 130;
-        t.stop(timerID);
-        timerID =  t.every(700, blinkLights);
+        //t.stop(timerID);
+        //timerID =  t.every(700, blinkLights);
 
         break;
 
       case '4':
         baseSpeed = 140;
-        t.stop(timerID);
-        timerID = t.every(600, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(600, blinkLights);
 
         break;
 
 
       case '5':
         baseSpeed = 150;
-        t.stop(timerID);
-        timerID = t.every(500, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(500, blinkLights);
 
         break;
 
       case '6':
         baseSpeed = 160;
-        t.stop(timerID);
-        timerID = t.every(400, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(400, blinkLights);
 
         break;
 
       case '7':
         baseSpeed = 170;
-        t.stop(timerID);
-        timerID = t.every(300, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(300, blinkLights);
 
         break;
 
       case '8':
         baseSpeed = 180;
-        t.stop(timerID);
-        timerID = t.every(200, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(200, blinkLights);
 
         break;
 
       case '9':
         baseSpeed = 200;
-        t.stop(timerID);
-        timerID = t.every(100, blinkLights);
+        //t.stop(timerID);
+        //timerID = t.every(100, blinkLights);
         break;
 
       case 'S':
