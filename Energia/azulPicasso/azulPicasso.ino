@@ -1,7 +1,7 @@
-#define M1PWM P3_0
-#define M1A P2_0
-#define M2PWM P2_2
-#define M2A P3_3
+#define M2PWM P3_0
+#define M2A P2_0
+#define M1PWM P2_2
+#define M1A P3_3
 #define LED1 P3_2
 #define LED2 P3_4
 #define M1E P3_1
