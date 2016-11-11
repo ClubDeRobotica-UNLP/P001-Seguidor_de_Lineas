@@ -1,4 +1,4 @@
-#define ERROR_CASE_1 0.0
+/*#define ERROR_CASE_1 0.0
 #define ERROR_CASE_2 10.0
 #define ERROR_CASE_3 20.0
 #define ERROR_CASE_4 30.0
@@ -10,14 +10,29 @@
 #define ERROR_MAX 80.0
 #define ERROR_MIN -80.0
 #define DELTA_ERROR_MAX 10.0
+#define DELTA_ERROR_MIN -10.0*/
+
+#define ERROR_CASE_1 0.0
+#define ERROR_CASE_2 5
+#define ERROR_CASE_3 15.0
+#define ERROR_CASE_4 30.0
+#define ERROR_CASE_5 45.0
+#define ERROR_CASE_6 -5.0
+#define ERROR_CASE_7 -15.0
+#define ERROR_CASE_8 -30.0
+#define ERROR_CASE_9 -45.0
+#define ERROR_MAX 100.0
+#define ERROR_MIN -100.0
+#define DELTA_ERROR_MAX 10.0
 #define DELTA_ERROR_MIN -10.0
+
 
 #define DELAY_REVERSA 150 // en ms (probar 100, 50, 25)
 
 int LecturaSensores2(char mode, char serial, float* error, float* error_ant, unsigned long* LastTime2, byte* flags, boolean* flag_case_1)
 {
   int sensor[5] = {0};
-  byte umbral = 40;
+  byte umbral = 60;
   byte palabra = 0x00;
 
   sensor[0] = analogRead(S1);
@@ -44,7 +59,7 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error = ERROR_CASE_1;
         //*flag_case_1 = ! *flag_case_1; // para elegir a veces +error o a veces -error
       }
-      if ((*flags == 0x01) && (*error < ERROR_CASE_2) && (*flag_case_1 == 0)) // si ya habia entrado antes, voy acumulando
+      /*if ((*flags == 0x01) && (*error < ERROR_CASE_2) && (*flag_case_1 == 0)) // si ya habia entrado antes, voy acumulando
       {
         *error_ant = *error;
         *error += 1;
@@ -63,7 +78,7 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
       {
         *error_ant = *error;
         *error = ERROR_CASE_6;
-      }
+      }*/
       break;
 
     case 0x0C:  // CASO 2
@@ -255,15 +270,15 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
 
   if ((serial == 1) && (dt2 > DT2))
   {
-    Serial.println("----");
+    /*Serial.println("----");
     Serial.println(sensor[0]);
     Serial.println(sensor[1]);
     Serial.println(sensor[2]);
     Serial.println(sensor[3]);
-    Serial.println(sensor[4]);
+    Serial.println(sensor[4]);*/
     /*Serial.print("Estados sensores     ");
     Serial.println(palabra, BIN);
-    Serial.println();
+    Serial.println();*/
     Serial.print("Error[k]:     ");
     Serial.println(*error);
     Serial.println();
@@ -273,7 +288,7 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
     Serial.print("PWM filtrado[k]:     ");
     Serial.println(pwm_filtrado);
     Serial.println();
-    Serial.println("----");*/
+    Serial.println("----");
     *LastTime2 = Now2;
   }
 

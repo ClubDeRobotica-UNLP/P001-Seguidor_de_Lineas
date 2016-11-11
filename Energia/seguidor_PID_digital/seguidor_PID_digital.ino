@@ -1,6 +1,7 @@
-#define KP 1.95  // Luego divido por 10   VEL_FILT_MAX = 30*KP/10 + DError * KD
-#define KD 0.7
-#define VEL 80 // con 200 
+#define KP 0.8  
+#define KD KP/5.0 
+#define VEL_MAX 130
+#define VEL VEL_MAX/3*2// con 200
 #define DT 1000  // Cada 1 ms accion de control.
 
 #define M1PWM P3_0
@@ -38,7 +39,7 @@ float LastError[1] = {0};
 float Error[1] = {0};
 //int FlagFueraPista[1] = {0};
 int Constantes[4] = {KP,KD,DT,VEL};
-unsigned long dt = 0;
+unsigned long dt = 0; 
 unsigned long Now = 0;
 unsigned long LastTime[1] = {0};
 unsigned long LastTime2[1] = {0};
@@ -123,7 +124,7 @@ void loop(){
       /**Vel_filtrada = LecturaSensores(1, 0, 0, SensorMaxMin, SensorMinMax, LastError, FlagFueraPista, false, LastTime2); // Esta funcion tarda 1 ms aprox      
       SeguirLinea(M1PWM, M1A, M2PWM, M2A, M1E, M2E, Vel_filtrada[0], Constantes[3]);  // Esta funcion tarda 50 us aprox.
       *LastTime = Now;*/
-      Vel_filtrada[0] = LecturaSensores2(1, 1, Error, LastError, LastTime2, Flags, Flag_case_1);
+      Vel_filtrada[0] = LecturaSensores2(1, 0, Error, LastError, LastTime2, Flags, Flag_case_1);
       SeguirLinea(M1PWM, M1A, M2PWM, M2A, M1E, M2E, Vel_filtrada[0], Constantes[3]);  // Esta funcion tarda 50 us aprox.
       *LastTime = Now;
     }

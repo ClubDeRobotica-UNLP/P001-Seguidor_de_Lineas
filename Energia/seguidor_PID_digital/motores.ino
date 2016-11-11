@@ -84,9 +84,14 @@ void SeguirLinea(byte motor1PWM, byte motor1D, byte motor2PWM, byte motor2D, byt
         {
           LEDsDrive(0,1); 
         }
-
-        M1Vel = constrain(M1Vel,-255,255);
-        M2Vel = constrain(M2Vel,-255,255);
+        
+        if(M1Vel > VEL_MAX){M1Vel = VEL_MAX; M2Vel = -VEL_MAX;}
+        if(M2Vel > VEL_MAX){M2Vel = VEL_MAX; M1Vel = -VEL_MAX;}
+        if(M1Vel < -VEL_MAX){M1Vel = -VEL_MAX;M2Vel = VEL_MAX;}
+        if(M2Vel < -VEL_MAX){M2Vel = -VEL_MAX;M1Vel = VEL_MAX;}
+        
+      //  M1Vel = constrain(M1Vel,-255,255);
+      //  M2Vel = constrain(M2Vel,-255,255);
         
         MoverMotores(motor1PWM, motor1D, motor2PWM, motor2D, M1Vel, M2Vel); 
                                                                
