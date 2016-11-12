@@ -63,7 +63,7 @@ void ApagarMotores(byte motor1PWM, byte motor1D, byte motor2PWM, byte motor2D)
     SeguirLinea; Mueve los motores seg�n la salida de LecturaSensores2.
 */
 
-void SeguirLinea(byte motor1PWM, byte motor1D, byte motor2PWM, byte motor2D, byte motor1E, byte motor2E, int VelFiltrada, int Vel)
+void SeguirLinea(byte motor1PWM, byte motor1D, byte motor2PWM, byte motor2D, byte motor1E, byte motor2E, int VelFiltrada, int Vel, int delay_ms)
 { 
 
     int M1Vel = 0;
@@ -94,6 +94,8 @@ void SeguirLinea(byte motor1PWM, byte motor1D, byte motor2PWM, byte motor2D, byt
       //  M2Vel = constrain(M2Vel,-255,255);
         
         MoverMotores(motor1PWM, motor1D, motor2PWM, motor2D, M1Vel, M2Vel); 
+		
+		delay(delay_ms);
                                                                
         
 }

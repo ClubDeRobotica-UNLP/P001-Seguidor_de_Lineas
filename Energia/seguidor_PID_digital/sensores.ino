@@ -14,22 +14,22 @@
 
 #define ERROR_CASE_1 0.0
 #define ERROR_CASE_2 5
-#define ERROR_CASE_3 15.0
-#define ERROR_CASE_4 30.0
-#define ERROR_CASE_5 45.0
+#define ERROR_CASE_3 20.0
+#define ERROR_CASE_4 40.0
+#define ERROR_CASE_5 100.0
 #define ERROR_CASE_6 -5.0
-#define ERROR_CASE_7 -15.0
-#define ERROR_CASE_8 -30.0
-#define ERROR_CASE_9 -45.0
+#define ERROR_CASE_7 -20.0
+#define ERROR_CASE_8 -40.0
+#define ERROR_CASE_9 -100.0
 #define ERROR_MAX 100.0
 #define ERROR_MIN -100.0
-#define DELTA_ERROR_MAX 10.0
-#define DELTA_ERROR_MIN -10.0
+#define DELTA_ERROR_MAX 20.0
+#define DELTA_ERROR_MIN -20.0
 
 
 #define DELAY_REVERSA 150 // en ms (probar 100, 50, 25)
 
-int LecturaSensores2(char mode, char serial, float* error, float* error_ant, unsigned long* LastTime2, byte* flags, boolean* flag_case_1)
+int LecturaSensores2(char mode, char serial, float* error, float* error_ant, unsigned long* LastTime2, byte* flags)
 {
   int sensor[5] = {0};
   byte umbral = 60;
@@ -51,37 +51,18 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
 
   switch (palabra)
   {
-    case 0x04:  // CASO 1
+	  case 0B00000100:
+    //case 0x04:  // CASO 1
       if (*flags != 0x01)
       {
         *flags = 0x01;
         *error_ant = *error;
         *error = ERROR_CASE_1;
-        //*flag_case_1 = ! *flag_case_1; // para elegir a veces +error o a veces -error
       }
-      /*if ((*flags == 0x01) && (*error < ERROR_CASE_2) && (*flag_case_1 == 0)) // si ya habia entrado antes, voy acumulando
-      {
-        *error_ant = *error;
-        *error += 1;
-      }
-      if ((*flags == 0x01) && (*error == ERROR_CASE_2) && (*flag_case_1 == 0)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_2;
-      }
-      if ((*flags == 0x01) && (*error > ERROR_CASE_6) && (*flag_case_1 == 1)) // si ya habia entrado antes, voy acumulando
-      {
-        *error_ant = *error;
-        *error -= 1;
-      }
-      if ((*flags == 0x01) && (*error == ERROR_CASE_6) && (*flag_case_1 == 1)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_6;
-      }*/
-      break;
+    break;
 
-    case 0x0C:  // CASO 2
+	case 0B00001100:
+    //case 0x0C:  // CASO 2
       if (*flags != 0x02)
       {
         *flags = 0x02;
@@ -93,14 +74,10 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error_ant = *error;
         *error += 1;
       }
-      if ((*flags == 0x02) && (*error == ERROR_CASE_3)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_4;
-      }
-      break;
-
-    case 0x08:  // CASO 3
+    break;
+	
+	case 0B00001000:
+    //case 0x08:  // CASO 3
       if (*flags != 0x03) // flag correspondiente al caso
       {
         *flags = 0x03; // flag = TRUE
@@ -112,14 +89,10 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error_ant = *error;
         *error += 1;
       }
-      if ((*flags == 0x03) && (*error == ERROR_CASE_4)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_4;
-      }
-      break;
+    break;
 
-    case 0x18:  // CASO 4
+	case 0B00011000:
+    //case 0x18:  // CASO 4
       if (*flags != 0x04)
       {
         *flags = 0x04; // flag = TRUE
@@ -131,14 +104,10 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error_ant = *error;
         *error += 1;
       }
-      if ((*flags == 0x04) && (*error == ERROR_CASE_5)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_5;
-      }
-      break;
+    break;
 
-    case 0x10: // CASO 5
+	case 0B00010000:
+    //case 0x10: // CASO 5
       if (*flags != 0x05)
       {
         *flags = 0x05; // flag = TRUE
@@ -150,14 +119,10 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error_ant = *error;
         *error += 1;
       }
-      if ((*flags == 0x05) && (*error == ERROR_MAX)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_MAX;
-      }
-      break;
+    break;
 
-    case 0x06: // CASO 6
+	case 0B00000110:	
+    //case 0x06: // CASO 6
       if (*flags != 0x06)
       {
         *flags = 0x06; // flag = TRUE
@@ -169,14 +134,10 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error_ant = *error;
         *error -= 1;
       }
-      if ((*flags == 0x06) && (*error == ERROR_CASE_7)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_7;
-      }
-      break;
+    break;
 
-    case 0x02: // CASO 7
+	case 0B00000010:	
+    //case 0x02: // CASO 7
       if (*flags != 0x07)
       {
         *flags = 0x07; // flag = TRUE
@@ -195,7 +156,8 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
       }
       break;
 
-    case 0x03: // CASO 8
+	case 0B00000011:
+	 //case 0x03: // CASO 8
       if (*flags != 0x08) // flag correspondiente al caso
       {
         *flags = 0x08; // flag = TRUE
@@ -207,14 +169,10 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
         *error_ant = *error;
         *error -= 1;
       }
-      if ((*flags == 0x08) && (*error == ERROR_CASE_9)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_CASE_9;
-      }
-      break;
-
-    case 0x01: // CASO 9
+    break;
+	
+	case 0B00000001:
+    //case 0x01: // CASO 9
       if (*flags != 0x09)
       {
         *flags = 0x09; // flag = TRUE
@@ -225,11 +183,6 @@ int LecturaSensores2(char mode, char serial, float* error, float* error_ant, uns
       {
         *error_ant = *error;
         *error -= 1;
-      }
-      if ((*flags == 0x09) && (*error == ERROR_MIN)) // hasta llegar al error del caso siguiente
-      {
-        *error_ant = *error;
-        *error = ERROR_MIN;
       }
       break;
 
