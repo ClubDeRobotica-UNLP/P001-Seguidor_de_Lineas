@@ -54,8 +54,7 @@ void setup(){
   Serial.println("*** INITS ***");
   LEDsInit();
   MotoresInit(M1A, M2A, M1E, M2E);
-  digitalWrite(M1E, 0);
-  digitalWrite(M2E, 0);
+  ApagarMotores(M1PWM, M1A, M2PWM, M2A);
   pinMode(BOTON,INPUT_PULLUP); // Boton para programa
   pinMode(LEDON, OUTPUT); 	   // Salida para encender CNY
 
@@ -64,8 +63,8 @@ void setup(){
 	LEDsBlink(1, 1, 1, 200);
   }
 
+  ApagarMotores(M1PWM, M1A, M2PWM, M2A);
   LEDsDrive(1,1);
-
   
   while(digitalRead(BOTON) == 1){}
   
@@ -81,8 +80,6 @@ void loop(){
    Flag = !Flag;
    Ledon_state = !Ledon_state;
    digitalWrite(LEDON,Ledon_state); // Apago Sensores si Ledon_state = 1 !
-   digitalWrite(M1E, 1);
-   digitalWrite(M2E, 1);
    delay(200); 
   }
   
@@ -102,8 +99,7 @@ void loop(){
   else
   {
     LEDsDrive(0,0);
-    digitalWrite(M1E, 0);
-    digitalWrite(M2E, 0);
+    ApagarMotores(M1PWM, M1A, M2PWM, M2A);
   }
   
 }
