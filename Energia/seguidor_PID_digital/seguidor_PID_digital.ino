@@ -1,5 +1,5 @@
 #define KP 1  
-#define KD 10	// Probar con KD >> KP 
+#define KD 2.5	// Probar con KD >> KP 
 #define VEL_MAX 130
 #define VEL VEL_MAX/3*2// con 200
 #define DT 1000  // Cada 1 ms accion de control.
@@ -60,7 +60,7 @@ void setup(){
 
   while(digitalRead(BOTON) == 1)
   { 
-	LEDsBlink(1, 1, 1, 200);
+	LEDsBlink(1, 1, 1, 100);
   }
 
   ApagarMotores(M1PWM, M1A, M2PWM, M2A);

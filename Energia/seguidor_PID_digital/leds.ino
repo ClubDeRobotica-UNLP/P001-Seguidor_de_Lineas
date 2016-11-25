@@ -24,7 +24,7 @@ void LEDsDrive(bool stateLED1, bool stateLED2){
 
 void LEDsBlink(bool stateLED1, bool stateLED2, byte blinks, byte blinkDelay){
  
- for(int k=1 ; k <= blinks ; k++)
+ for(int k=0 ; k < 2 * blinks ; k++)
  {
 	digitalWrite(LED1, stateLED1);
 	digitalWrite(LED2, stateLED2);
